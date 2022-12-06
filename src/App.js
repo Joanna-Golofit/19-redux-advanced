@@ -2,7 +2,7 @@ import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
-import { sendCartData } from './store/cart-actions';
+import { sendCartData, fetchCartData } from './store/cart-actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 // import { uiActions } from './store/ui-slice';
@@ -17,6 +17,9 @@ function App() {
   const dispatch = useDispatch();
 
   console.log('cały state tak wyglada', state)
+  useEffect(() => {
+    dispatch(fetchCartData())
+  }, [dispatch]);
 
   useEffect(() => {
     if (dontFireUseEffectYet) {
