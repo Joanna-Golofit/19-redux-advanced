@@ -17,6 +17,7 @@ function App() {
   const dispatch = useDispatch();
 
   console.log('cały state tak wyglada', state)
+
   useEffect(() => {
     dispatch(fetchCartData())
   }, [dispatch]);
@@ -26,8 +27,10 @@ function App() {
       dontFireUseEffectYet = false; // nie uzywamy useState bo nie chcemy renderowania ponownego
       return;
     }
-    dispatch(sendCartData(cart))
 
+    if (cart.changed) {
+      dispatch(sendCartData(cart)) // zapobiega wysylaniu danych do firebase tuz po pierwszym fetchu 
+    }
   }, [cart, dispatch])
 
   return (

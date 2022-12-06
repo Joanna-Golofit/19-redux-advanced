@@ -17,7 +17,8 @@ export const fetchCartData = () => {
 
   try {
     const cartData = await fetchData();
-    dispatch(cartActions.replaceCart(cartData))
+    // dispatch(cartActions.replaceCart(cartData)) jesli zostaje tak moga pojawic sie bledy przy recznej modyfikacji bazy danych
+    dispatch(cartActions.replaceCart({ items: cartData.items || [], totalQuantity: cartData.totalQuantity || 0 }))
   } catch (error) {
     dispatch(uiActions.showNotification({
       status: 'error',
@@ -42,7 +43,8 @@ export const sendCartData = (cart) => {
         'https://http-5fa63-default-rtdb.europe-west1.firebasedatabase.app/cart.json',
         {
           method: "PUT",
-          body: JSON.stringify(cart)
+          // body: JSON.stringify(cart)  / tu wysylalo razem z changed
+          body: JSON.stringify({items: cart.items, totalQuantity: cart.totalQuantity})
         }
       );
 
